@@ -2,21 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 🔮 強效空間撐開咒：無論如何都強行鎖定視窗高度 */
 html,
-body {
+body,
+#root {
     margin: 0;
     padding: 0;
-    width: 100%;
-    /* 🔑 允許高度自由撐開，讓 GSAP 的 500% 滾動動態生效 */
-    min-height: 100vh;
-    background-color: #000000;
-    overflow-x: hidden;
-    /* 讓滾動條變得精緻（復古羊皮紙色調） */
-    scrollbar-color: #f59e0b #111827;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100vh !important;
+    background-color: #000000 !important;
+    overflow-x: hidden !hidden;
 }
 
-/* 確保全螢幕定位元件不會縮水 */
-#root {
-    width: 100%;
-    height: 100%;
+/* 確保全螢幕定位不會因為壓縮而坍塌 */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.w-full {
+    width: 100% !important;
+}
+
+.h-screen {
+    height: 100vh !important;
+}
+
+.bg-cover {
+    background-size: cover !important;
+}
+
+.bg-center {
+    background-position: center !important;
 }
