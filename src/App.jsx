@@ -131,14 +131,14 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🚂 場景 1：九分之三月台 & 入學通知書 */}
             {/* ========================================================= */}
-            <div ref={scene1Ref} className="absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/backgrounds/platform_wall.jpg')" }}>
+            <div ref={scene1Ref} className="absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/platform_wall.jpg')" }}>
                 <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
                 <div className="relative z-20 text-center max-w-xl mx-auto">
                     <h1 className="text-3xl md:text-5xl font-bold text-amber-400 tracking-wider mb-2">{t('welcome.title')}</h1>
                     <p className="text-sm md:text-md text-gray-300 italic mb-8">{t('welcome.subtitle')}</p>
 
                     <div className="relative bg-[#f4ebd0] text-gray-800 p-6 md:p-8 rounded-md shadow-2xl border-2 border-amber-700/30 max-w-sm mx-auto transform rotate-1">
-                        <img src="/src/assets/sana/envelope_seal.png" className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 z-10" alt="Seal" />
+                        <img src="/public/assets/sana/envelope_seal.png" className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 z-10" alt="Seal" />
                         <p className="text-green-800 font-mono text-left whitespace-pre-line text-xs md:text-sm leading-relaxed pt-4">
                             {t('welcome.letter_address')}
                         </p>
@@ -150,11 +150,11 @@ export default function App() {
             {/* ========================================================= */}
             {/* 📚 場景 2：斜角巷 · 麗痕書店 (Sana 個人檔案) */}
             {/* ========================================================= */}
-            <div ref={scene2Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/backgrounds/diagon_alley.jpg')" }}>
+            <div ref={scene2Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/diagon_alley.jpg')" }}>
                 <div className="absolute inset-0 bg-black/70" />
                 <div className="relative z-20 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                     <div className="flex justify-center">
-                        <img src="/src/assets/sana/sana_profile.png" className="max-h-[40vh] md:max-h-[60vh] object-contain drop-shadow-[0_10px_20px_rgba(245,158,11,0.3)]" alt="Sana" />
+                        <img src="/public/assets/sana/sana_profile.png" className="max-h-[40vh] md:max-h-[60vh] object-contain drop-shadow-[0_10px_20px_rgba(245,158,11,0.3)]" alt="Sana" />
                     </div>
                     <div className="bg-gray-900/80 p-6 rounded-xl border border-amber-500/30 backdrop-blur-md">
                         <h2 className="text-2xl font-bold text-amber-400 mb-4">{t('scenes.scene2_title')}</h2>
@@ -175,7 +175,7 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🏰 場景 3：霍格華茲大禮堂 (樂譜與 KOMCA 創作對接) */}
             {/* ========================================================= */}
-            <div ref={scene3Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/backgrounds/great_hall.jpg')" }}>
+            <div ref={scene3Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/great_hall.jpg')" }}>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
                 <div className="relative z-20 w-full max-w-6xl text-center">
                     <h2 className="text-2xl md:text-4xl font-bold text-amber-400 mb-6 tracking-widest">{t('scenes.scene3_title')}</h2>
@@ -184,7 +184,7 @@ export default function App() {
 
                         {/* 🔮 具象化：KOMCA 創作魔鏡 (動態對接數據) */}
                         <div className="relative flex justify-center items-center h-[45vh]">
-                            <img src="/src/assets/sana/magic_mirror.png" className="absolute max-h-full object-contain opacity-70" alt="Mirror" />
+                            <img src="/public/assets/sana/magic_mirror.png" className="absolute max-h-full object-contain opacity-70" alt="Mirror" />
                             <div className="relative z-10 w-[65%] h-[75%] overflow-y-auto p-4 text-left text-xs space-y-3 scrollbar-thin">
                                 <p className="font-bold border-b border-amber-500/30 pb-1 text-center text-amber-400">🔮 KOMCA 創作靈魂</p>
                                 {discoData.komca_credits.map((item, index) => (
@@ -239,7 +239,7 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🧪 場景 4：萬應室 & 交誼廳 (概念細節展示) */}
             {/* ========================================================= */}
-            <div ref={scene4Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/backgrounds/cozy_tavern.jpg')" }}>
+            <div ref={scene4Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/cozy_tavern.jpg')" }}>
                 <div className="absolute inset-0 bg-black/70" />
                 <div className="relative z-20 w-full max-w-4xl">
                     <h2 className="text-2xl md:text-3xl font-bold text-amber-400 mb-6 text-center">{t('scenes.scene4_title')}</h2>
@@ -267,7 +267,7 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🍻 場景 5：三把掃帚酒吧 (ONCE 公開留言板) */}
             {/* ========================================================= */}
-            <div ref={scene5Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/backgrounds/cozy_tavern.jpg')" }}>
+            <div ref={scene5Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/cozy_tavern.jpg')" }}>
                 <div className="absolute inset-0 bg-black/80" />
                 <div className="relative z-20 w-full max-w-2xl bg-gray-900/90 p-6 rounded-xl border border-amber-500/40 shadow-2xl">
                     <h2 className="text-xl md:text-2xl font-bold text-amber-400 mb-4 text-center">🍻 {t('scenes.scene5_title')}</h2>
@@ -285,7 +285,7 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🐍 高級安全特設：地窖秘密房間 (密碼保護) */}
             {/* ========================================================= */}
-            <div ref={chamberRef} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: `url(${chamberUnlocked ? '/src/assets/backgrounds/chamber_inside.jpg' : '/src/assets/backgrounds/chamber_gate.jpg'})` }}>
+            <div ref={chamberRef} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: `url(${chamberUnlocked ? '/public/assets/backgrounds/chamber_inside.jpg' : '/public/assets/backgrounds/chamber_gate.jpg'})` }}>
                 <div className="absolute inset-0 bg-black/80" />
 
                 <div className="relative z-20 w-full max-w-xl text-center chamber-gate-ui">
