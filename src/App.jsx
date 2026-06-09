@@ -153,13 +153,16 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🚂 場景 1：九分之三月台 & 入學通知書 */}
             {/* ========================================================= */}
+            {/* 請找到原本這段，並用下方的代碼替換 */}
             <div ref={scene1Ref} className="absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${platformWall})` }}>
                 <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
-                <div className="relative z-20 text-center max-w-xl mx-auto">
-                    <h1 className="text-3xl md:text-5xl font-bold text-amber-400 tracking-wider mb-2">{t('welcome.title')}</h1>
+                <div className="relative z-20 text-center w-full max-w-xl mx-auto">
+                    {/* 🔑 這裡加上了 magic-title */}
+                    <h1 className="magic-title font-bold text-amber-400 tracking-wider mb-2">{t('welcome.title')}</h1>
                     <p className="text-sm md:text-md text-gray-300 italic mb-8">{t('welcome.subtitle')}</p>
 
-                    <div className="relative bg-[#f4ebd0] text-gray-800 p-6 md:p-8 rounded-md shadow-2xl border-2 border-amber-700/30 max-w-sm mx-auto transform rotate-1">
+                    {/* 🔑 這裡加上了 magic-envelope-card */}
+                    <div className="magic-envelope-card relative bg-[#f4ebd0] text-gray-800 p-6 md:p-8 rounded-md shadow-2xl border-2 border-amber-700/30 mx-auto transform rotate-1">
                         <img src={envelopeSeal} className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 z-10" alt="Seal" />
                         <p className="text-green-800 font-mono text-left whitespace-pre-line text-xs md:text-sm leading-relaxed pt-4">
                             {t('welcome.letter_address')}
