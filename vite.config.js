@@ -1,11 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// 確保打包路徑為相對路徑，讓 Vercel 能完美抓取 SPA 的路由與靜態記憶檔案
+// 🧭 這是 2026 年最穩定的 Vite + Tailwind 標準編譯配置
 export default defineConfig({
     plugins: [react()],
     base: './',
+    css: {
+        postcss: './postcss.config.js' // 🔑 強制 Vite 在打包時必須讀取 PostCSS 樣式配方！
+    },
     build: {
-        outDir: 'dist', // 告訴 Vercel 編譯後的魔法陣要產在 dist 資料夾
+        outDir: 'dist'
     }
 })

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 🔮 強效空間撐開咒：無論如何都強行鎖定視窗高度 */
+/* 🔮 強效空間與尺寸保障 */
 html,
 body,
 #root {
@@ -12,31 +12,20 @@ body,
     height: 100% !important;
     min-height: 100vh !important;
     background-color: #000000 !important;
-    overflow-x: hidden !hidden;
+    overflow-x: hidden;
+    color: #f59e0b;
 }
 
-/* 確保全螢幕定位不會因為壓縮而坍塌 */
-.relative {
-    position: relative;
+/* 🧱 兜底物理防線：如果 Tailwind 失效，直接用原生 CSS 強行把信封放大！ */
+.max-w-sm {
+    max-width: 450px !important;
+    /* 強行鎖定信封寬度 */
+    width: 90% !important;
 }
 
-.absolute {
-    position: absolute;
-}
-
-.inset-0 {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-.w-full {
-    width: 100% !important;
-}
-
-.h-screen {
-    height: 100vh !important;
+.text-3xl {
+    font-size: 2rem !important;
+    /* 強行放大標題 */
 }
 
 .bg-cover {
