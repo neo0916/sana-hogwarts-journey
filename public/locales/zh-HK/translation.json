@@ -1,0 +1,31 @@
+{
+    "welcome": {
+        "title": "Sana's Hogwarts Journey",
+        "subtitle": "實現湊崎紗夏小姐的魔法入學夢想",
+        "letter_address": "致 湊崎紗夏小姐\n日本大阪府天王寺區\n霍格華茲大禮堂赫夫帕夫長桌收",
+        "accept_button": "接受入學通知，開啟魔法世界"
+    },
+    "scenes": {
+        "scene2_title": "斜角巷 · 麗痕書店",
+        "scene3_title": "霍格華茲大禮堂 · 赫夫帕夫",
+        "scene4_title": "萬應室 · 冷知識大賞",
+        "scene5_title": "三把掃帚酒吧 · 公開佈告欄",
+        "chamber_title": "地窖深處 · 蛇妖密室"
+    },
+    "profile": {
+        "name": "湊崎 紗夏 (Minatozaki Sana)",
+        "birth": "1996年12月29日 (魔羯座)",
+        "blood_type": "B型",
+        "traits": "獨生女 / 團隊唯一 ENFP 人間維他命",
+        "official_color": "代表色：紫色",
+        "chronicle_title": "《湊崎紗夏：早期成長與培訓編年史》",
+        "origin_text": "出生於日本大阪市天王寺區。小學六年級受少女時代與 KARA 啟發立下歌手志願。歷經日本 EXPG 三年系統化歌舞培訓，2011 年在大阪難波地下街（Namba Walk）命運般被發掘，於 2012 年 4 月 13 日遠赴韓國展開練習生生涯。"
+    },
+    "chamber": {
+        "hint": "⚠️ 進入密室需要高超的魔法，請說出爬說語（輸入專屬密碼）",
+        "placeholder": "輸入密碼...",
+        "error": "⚡ 符文閃爍紅光，密碼錯誤！石蛇向你發出嘶嘶聲。",
+        "success": "🪄 密碼正確。石蛇緩緩退開，秘密房間已立體開啟...",
+        "letter_title": "《致 紗夏：跨越星海的一封信》"
+    }
+}
