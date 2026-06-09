@@ -3,6 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// 🪄 【顯形召喚術】直接引入圖片，強迫 Vite 必須打包它們！
+import platformWall from '/assets/backgrounds/platform_wall.jpg';
+import diagonAlley from '/assets/backgrounds/diagon_alley.jpg';
+import greatHall from '/assets/backgrounds/great_hall.jpg';
+import cozyTavern from '/assets/backgrounds/cozy_tavern.jpg';
+import chamberGate from '/assets/backgrounds/chamber_gate.jpg';
+import chamberInside from '/assets/backgrounds/chamber_inside.jpg';
+
+import envelopeSeal from '/assets/sana/envelope_seal.png';
+import sanaProfile from '/assets/sana/sana_profile.png';
+import magicMirror from '/assets/sana/magic_mirror.png';
+
 gsap.registerPlugin(ScrollTrigger);
 
 // 「1229sana&ho」的不可逆 SHA-256 雜湊值封印
@@ -18,7 +30,7 @@ export default function App() {
 
     // 🗃️ 儲思盆數據狀態
     const [discoData, setDiscoData] = useState({ twice_korean: [], misamo_japanese: [], sana_solos: [], komca_credits: [] });
-    const [activeVideoId, setActiveVideoId] = useState(null); // 彈出式 YouTube 播放窗
+    const [activeVideoId, setActiveVideoId] = useState(null);
 
     // 網頁立體層層按入的 DOM 錨點
     const containerRef = useRef(null);
@@ -29,13 +41,11 @@ export default function App() {
     const scene5Ref = useRef(null);
     const chamberRef = useRef(null);
 
-    // 🌐 語言切換咒語
     const switchLanguage = (lang) => {
         i18n.changeLanguage(lang);
         setCurrentLang(lang);
     };
 
-    // 🔐 密室原生 SHA-256 加密驗證
     const sha256 = async (string) => {
         const utf8 = new TextEncoder().encode(string);
         const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
@@ -58,7 +68,6 @@ export default function App() {
         }
     };
 
-    // 🧪 讀取 discography.json 魔法數據
     useEffect(() => {
         fetch('/data/discography.json')
             .then(res => res.json())
@@ -66,32 +75,45 @@ export default function App() {
             .catch(err => console.error("🔮 讀取儲思盆記憶失敗:", err));
     }, []);
 
-    // 🌀 GSAP 「一頁一世界」立體視差與推進特效
+    // 🌀 GSAP 「一頁一世界」核心視差（大幅優化滾動與可見度控制）
     useEffect(() => {
         const ctx = gsap.context(() => {
+            // 初始化所有場景的初始狀態，防止一片黑暗
+            gsap.set([scene2Ref.current, scene3Ref.current, scene4Ref.current, scene5Ref.current, chamberRef.current], {
+                opacity: 0,
+                scale: 0.5,
+                pointerEvents: "none"
+            });
+            gsap.set(scene1Ref.current, { opacity: 1, scale: 1, pointerEvents: "auto" });
+
             gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: "top top",
                     end: "+=500%",
-                    scrub: 1,
+                    scrub: 1.2,
                     pin: true,
                 }
             })
-                .to(scene1Ref.current, { scale: 2.5, opacity: 0, duration: 1 })
-                .from(scene2Ref.current, { scale: 0.5, opacity: 0, duration: 1 }, "-=0.5")
+                // 1 -> 2
+                .to(scene1Ref.current, { scale: 2, opacity: 0, pointerEvents: "none", duration: 1 })
+                .to(scene2Ref.current, { scale: 1, opacity: 1, pointerEvents: "auto", duration: 1 }, "-=0.5")
 
-                .to(scene2Ref.current, { scale: 2.5, opacity: 0, duration: 1 })
-                .from(scene3Ref.current, { scale: 0.5, opacity: 0, duration: 1 }, "-=0.5")
+                // 2 -> 3
+                .to(scene2Ref.current, { scale: 2, opacity: 0, pointerEvents: "none", duration: 1 })
+                .to(scene3Ref.current, { scale: 1, opacity: 1, pointerEvents: "auto", duration: 1 }, "-=0.5")
 
-                .to(scene3Ref.current, { scale: 2.5, opacity: 0, duration: 1 })
-                .from(scene4Ref.current, { scale: 0.5, opacity: 0, duration: 1 }, "-=0.5")
+                // 3 -> 4
+                .to(scene3Ref.current, { scale: 2, opacity: 0, pointerEvents: "none", duration: 1 })
+                .to(scene4Ref.current, { scale: 1, opacity: 1, pointerEvents: "auto", duration: 1 }, "-=0.5")
 
-                .to(scene4Ref.current, { scale: 2.5, opacity: 0, duration: 1 })
-                .from(scene5Ref.current, { scale: 0.5, opacity: 0, duration: 1 }, "-=0.5")
+                // 4 -> 5
+                .to(scene4Ref.current, { scale: 2, opacity: 0, pointerEvents: "none", duration: 1 })
+                .to(scene5Ref.current, { scale: 1, opacity: 1, pointerEvents: "auto", duration: 1 }, "-=0.5")
 
-                .to(scene5Ref.current, { scale: 2.5, opacity: 0, duration: 1 })
-                .from(chamberRef.current, { scale: 0.8, opacity: 0, duration: 1 }, "-=0.5");
+                // 5 -> 密室
+                .to(scene5Ref.current, { scale: 2, opacity: 0, pointerEvents: "none", duration: 1 })
+                .to(chamberRef.current, { scale: 1, opacity: 1, pointerEvents: "auto", duration: 1 }, "-=0.5");
 
             // 金色漂浮粒子
             gsap.to(".magic-particle", {
@@ -131,14 +153,14 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🚂 場景 1：九分之三月台 & 入學通知書 */}
             {/* ========================================================= */}
-            <div ref={scene1Ref} className="absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/platform_wall.jpg')" }}>
-                <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+            <div ref={scene1Ref} className="absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${platformWall})` }}>
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
                 <div className="relative z-20 text-center max-w-xl mx-auto">
                     <h1 className="text-3xl md:text-5xl font-bold text-amber-400 tracking-wider mb-2">{t('welcome.title')}</h1>
                     <p className="text-sm md:text-md text-gray-300 italic mb-8">{t('welcome.subtitle')}</p>
 
                     <div className="relative bg-[#f4ebd0] text-gray-800 p-6 md:p-8 rounded-md shadow-2xl border-2 border-amber-700/30 max-w-sm mx-auto transform rotate-1">
-                        <img src="/public/assets/sana/envelope_seal.png" className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 z-10" alt="Seal" />
+                        <img src={envelopeSeal} className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 z-10" alt="Seal" />
                         <p className="text-green-800 font-mono text-left whitespace-pre-line text-xs md:text-sm leading-relaxed pt-4">
                             {t('welcome.letter_address')}
                         </p>
@@ -150,11 +172,11 @@ export default function App() {
             {/* ========================================================= */}
             {/* 📚 場景 2：斜角巷 · 麗痕書店 (Sana 個人檔案) */}
             {/* ========================================================= */}
-            <div ref={scene2Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/diagon_alley.jpg')" }}>
+            <div ref={scene2Ref} className="absolute inset-0 flex justify-center items-center p-4 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${diagonAlley})` }}>
                 <div className="absolute inset-0 bg-black/70" />
                 <div className="relative z-20 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                     <div className="flex justify-center">
-                        <img src="/public/assets/sana/sana_profile.png" className="max-h-[40vh] md:max-h-[60vh] object-contain drop-shadow-[0_10px_20px_rgba(245,158,11,0.3)]" alt="Sana" />
+                        <img src={sanaProfile} className="max-h-[40vh] md:max-h-[60vh] object-contain drop-shadow-[0_10px_20px_rgba(245,158,11,0.3)]" alt="Sana" />
                     </div>
                     <div className="bg-gray-900/80 p-6 rounded-xl border border-amber-500/30 backdrop-blur-md">
                         <h2 className="text-2xl font-bold text-amber-400 mb-4">{t('scenes.scene2_title')}</h2>
@@ -175,19 +197,19 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🏰 場景 3：霍格華茲大禮堂 (樂譜與 KOMCA 創作對接) */}
             {/* ========================================================= */}
-            <div ref={scene3Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/great_hall.jpg')" }}>
+            <div ref={scene3Ref} className="absolute inset-0 flex justify-center items-center p-4 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${greatHall})` }}>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
                 <div className="relative z-20 w-full max-w-6xl text-center">
                     <h2 className="text-2xl md:text-4xl font-bold text-amber-400 mb-6 tracking-widest">{t('scenes.scene3_title')}</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
 
-                        {/* 🔮 具象化：KOMCA 創作魔鏡 (動態對接數據) */}
+                        {/* 🔮 KOMCA 創作魔鏡 */}
                         <div className="relative flex justify-center items-center h-[45vh]">
-                            <img src="/public/assets/sana/magic_mirror.png" className="absolute max-h-full object-contain opacity-70" alt="Mirror" />
+                            <img src={magicMirror} className="absolute max-h-full object-contain opacity-70" alt="Mirror" />
                             <div className="relative z-10 w-[65%] h-[75%] overflow-y-auto p-4 text-left text-xs space-y-3 scrollbar-thin">
                                 <p className="font-bold border-b border-amber-500/30 pb-1 text-center text-amber-400">🔮 KOMCA 創作靈魂</p>
-                                {discoData.komca_credits.map((item, index) => (
+                                {discoData.komca_credits && discoData.komca_credits.map((item, index) => (
                                     <div key={index} className="border-b border-gray-800 pb-1.5">
                                         <p className="text-amber-300 font-bold">《{item.title}》 <span className="text-xs text-amber-500/80">({item.type})</span></p>
                                         <p className="text-gray-400 text-[11px] leading-tight mt-0.5">{item.story}</p>
@@ -196,12 +218,12 @@ export default function App() {
                             </div>
                         </div>
 
-                        {/* 📜 歷年魔法樂譜記錄 (分類讀取數據) */}
+                        {/* 📜 歷年樂譜記錄 */}
                         <div className="bg-gray-950/80 p-5 rounded-xl border border-amber-600/30 text-left h-[45vh] overflow-y-auto space-y-4">
                             <div>
                                 <h4 className="text-amber-400 font-bold text-xs mb-2 border-b border-gray-800 pb-1">✨ TWICE 韓國音樂資產</h4>
                                 <ul className="space-y-1.5 text-xs">
-                                    {discoData.twice_korean.map((song, i) => (
+                                    {discoData.twice_korean && discoData.twice_korean.map((song, i) => (
                                         <li key={i} onClick={() => setActiveVideoId(song.youtube_id)} className="hover:text-amber-300 cursor-pointer flex justify-between items-start transition-colors">
                                             <span>▶ {song.year} - {song.title} <span className="text-gray-500 text-[10px]">{song.album}</span></span>
                                         </li>
@@ -212,7 +234,7 @@ export default function App() {
                             <div>
                                 <h4 className="text-amber-500 font-bold text-xs mb-2 border-b border-gray-800 pb-1">⚜️ MISAMO 日本分隊樂章</h4>
                                 <ul className="space-y-1.5 text-xs">
-                                    {discoData.misamo_japanese.map((song, i) => (
+                                    {discoData.misamo_japanese && discoData.misamo_japanese.map((song, i) => (
                                         <li key={i} onClick={() => song.youtube_id.includes("PLACEHOLDER") ? null : setActiveVideoId(song.youtube_id)} className="hover:text-amber-300 cursor-pointer flex justify-between transition-colors">
                                             <span>▶ {song.year} - {song.title}</span>
                                         </li>
@@ -223,7 +245,7 @@ export default function App() {
                             <div>
                                 <h4 className="text-purple-400 font-bold text-xs mb-2 border-b border-gray-800 pb-1">🔮 SANA 專屬獨唱魔奏</h4>
                                 <ul className="space-y-1.5 text-xs">
-                                    {discoData.sana_solos.map((song, i) => (
+                                    {discoData.sana_solos && discoData.sana_solos.map((song, i) => (
                                         <li key={i} onClick={() => song.youtube_id.includes("PLACEHOLDER") ? null : setActiveVideoId(song.youtube_id)} className="hover:text-amber-300 cursor-pointer flex justify-between transition-colors">
                                             <span>▶ {song.year} - {song.title}</span>
                                         </li>
@@ -237,9 +259,9 @@ export default function App() {
             </div>
 
             {/* ========================================================= */}
-            {/* 🧪 場景 4：萬應室 & 交誼廳 (概念細節展示) */}
+            {/* 🧪 場景 4：萬應室 & 交誼廳 */}
             {/* ========================================================= */}
-            <div ref={scene4Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/cozy_tavern.jpg')" }}>
+            <div ref={scene4Ref} className="absolute inset-0 flex justify-center items-center p-4 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${cozyTavern})` }}>
                 <div className="absolute inset-0 bg-black/70" />
                 <div className="relative z-20 w-full max-w-4xl">
                     <h2 className="text-2xl md:text-3xl font-bold text-amber-400 mb-6 text-center">{t('scenes.scene4_title')}</h2>
@@ -247,18 +269,18 @@ export default function App() {
                         <div className="bg-amber-950/40 p-4 rounded-lg border border-amber-500/20 h-[30vh] overflow-y-auto">
                             <h4 className="text-amber-400 font-bold text-sm mb-2">🎬 影音概念解密</h4>
                             <p className="text-xs text-gray-300 leading-relaxed space-y-2">
-                                {[...discoData.twice_korean, ...discoData.misamo_japanese].slice(0, 4).map((item, i) => (
+                                {discoData.twice_korean && [...discoData.twice_korean, ...discoData.misamo_japanese].slice(0, 4).map((item, i) => (
                                     <span key={i} className="block border-b border-amber-900/40 pb-1 mb-1"><strong>{item.title}:</strong> {item.concept}</span>
                                 ))}
                             </p>
                         </div>
                         <div className="bg-amber-950/40 p-4 rounded-lg border border-amber-500/20 h-[30vh]">
                             <h4 className="text-amber-400 font-bold text-sm mb-2">🐹 趣味冷知識大賞</h4>
-                            <p className="text-xs text-gray-300 leading-relaxed">極度熱愛恐怖片卻會瘋狂尖叫[cite: 1, 2]；擁有嚴重的夢遊症候群；能完美臨摹並偽造隊長志效的韓文書法字跡[cite: 2, 3]。</p>
+                            <p className="text-xs text-gray-300 leading-relaxed">極度熱愛恐怖片卻會瘋狂尖叫；擁有嚴重的夢遊症候群；能完美臨摹並偽造隊長志效的韓文書法字跡。</p>
                         </div>
                         <div className="bg-amber-950/40 p-4 rounded-lg border border-amber-500/20 h-[30vh]">
                             <h4 className="text-amber-400 font-bold text-sm mb-2">🏆 三巫鬥法榮譽</h4>
-                            <p className="text-xs text-gray-300 leading-relaxed">記載 TWICE 橫掃 MMA、MAMA 大賞紀錄[cite: 3]，以及日韓累計突破 1400 萬張實體銷量的至高魔法榮耀[cite: 2, 3]。</p>
+                            <p className="text-xs text-gray-300 leading-relaxed">記載 TWICE 橫掃 MMA、MAMA 大賞紀錄，以及日韓累計突破 1400 萬張實體銷量的至高魔法榮耀。</p>
                         </div>
                     </div>
                 </div>
@@ -267,12 +289,12 @@ export default function App() {
             {/* ========================================================= */}
             {/* 🍻 場景 5：三把掃帚酒吧 (ONCE 公開留言板) */}
             {/* ========================================================= */}
-            <div ref={scene5Ref} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('/public/assets/backgrounds/cozy_tavern.jpg')" }}>
+            <div ref={scene5Ref} className="absolute inset-0 flex justify-center items-center p-4 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${cozyTavern})` }}>
                 <div className="absolute inset-0 bg-black/80" />
                 <div className="relative z-20 w-full max-w-2xl bg-gray-900/90 p-6 rounded-xl border border-amber-500/40 shadow-2xl">
                     <h2 className="text-xl md:text-2xl font-bold text-amber-400 mb-4 text-center">🍻 {t('scenes.scene5_title')}</h2>
                     <div className="h-[25vh] bg-black/50 rounded-lg p-3 overflow-y-auto mb-4 border border-gray-800 text-xs space-y-2">
-                        <p className="text-amber-300"><strong>ONCE_Hogwarts:</strong> Sana Potter! 祝妳在赫夫帕夫過得快樂！🐹✨[cite: 1]</p>
+                        <p className="text-amber-300"><strong>ONCE_Hogwarts:</strong> Sana Potter! 祝妳在赫夫帕夫過得快樂！🐹✨</p>
                         <p className="text-gray-400"><strong>TwiceFan_HK:</strong> 期待 2026 正規專輯音樂盛宴！</p>
                     </div>
                     <div className="flex space-x-2">
@@ -283,9 +305,9 @@ export default function App() {
             </div>
 
             {/* ========================================================= */}
-            {/* 🐍 高級安全特設：地窖秘密房間 (密碼保護) */}
+            {/* 🐍 高級安全特設：地窖秘密房間 */}
             {/* ========================================================= */}
-            <div ref={chamberRef} className="absolute inset-0 opacity-0 flex justify-center items-center p-4 bg-cover bg-center" style={{ backgroundImage: `url(${chamberUnlocked ? '/public/assets/backgrounds/chamber_inside.jpg' : '/public/assets/backgrounds/chamber_gate.jpg'})` }}>
+            <div ref={chamberRef} className="absolute inset-0 flex justify-center items-center p-4 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${chamberUnlocked ? chamberInside : chamberGate})` }}>
                 <div className="absolute inset-0 bg-black/80" />
 
                 <div className="relative z-20 w-full max-w-xl text-center chamber-gate-ui">
@@ -331,9 +353,7 @@ export default function App() {
                 </div>
             </div>
 
-            {/* ========================================================= */}
-            {/* 📺 魔法傳送陣：無版權風險 YouTube 播放彈窗 */}
-            {/* ========================================================= */}
+            {/* 📺 彈出式 YouTube 播放窗 */}
             {activeVideoId && (
                 <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/90 p-4 animate-fade-in">
                     <div className="relative w-full max-w-3xl aspect-video bg-gray-950 rounded-lg overflow-hidden border border-amber-500/30">
